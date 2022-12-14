@@ -1,0 +1,20 @@
+
+footer{
+    margin-top: 10rem;
+    margin-bottom: 0;
+    padding: 2rem;
+    background-color: lightsalmon;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    .contenedor-footer{
+        display: flex;
+        justify-content: center;
+    }
+    @media(min-width:700px){
+        flex-direction: row;
+    }
+   
+
+}
