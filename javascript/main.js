@@ -1,33 +1,54 @@
-const usuarioConEmail = "facumazza98@gmail.com";
-const contrasenia = "holafacundo123" ;
+const formulario = document.querySelector("#formulario-contacto")
+const inputEmail = document.querySelector("#email")
+const inputNombre = document.querySelector("#nombre")
+const inputApellido = document.querySelector("#apellido")
+const inputMensaje = document.querySelector ("#mensaje")
+const avisoFallido = document.querySelector ("#aviso-fallido")
 
-let nombre = prompt("ingrese nu nombre");
-let usuario = prompt("ingrese su usuario con email");
-let contraseniaU = prompt ("ingrese su contrasenia");
 
 
+const subirAlLs = ( clave, valor ) => {
+    localStorage.setItem(clave, JSON.stringify(valor))
+}
 
-function validar(){
-    if(usuarioConEmail === usuario && contrasenia === contraseniaU){
-        alert(`Bienvenido ${nombre}`)
-    
-    }
-    else if (usuarioConEmail !== usuario || contrasenia !== contraseniaU ){
-        alert("usuario y/o contraseña incorrectos, intente nuevamente")
-        usuario = prompt ("ingrese usuario")
-        contraseniaU = prompt("ingrese contraseña")
-    } else {
-        alert("datos invalidos")
-    }
- while (usuario!== usuarioConEmail || contrasenia !== contraseniaU){
-    alert ("ingrese sus datos nuevamente")
-    usuario = prompt ("ingrese su usuario")
-    contraseniaU = prompt ("ingrese su contraseña")
- }
+const obtenerDelLs = ( clave ) => {
+    return JSON.parse(localStorage.getItem(clave))
 }
 
 
-validar ()
+formulario.onsubmit = ( event ) => {
+    event.preventDefault()
+    let avisos = ""
+    let entrar = false
+    avisoFallido.innerHTML = ""
+    let regexEmail = /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,4}))$/
+
+    if (!regexEmail.test (inputEmail.value)){
+        avisos += `El Email no es valido <br>`
+    }
+    if (inputNombre.value.length <3){
+        avisos += `el nombre no es valido <br>`
+        entrar = true
+
+    }
+    if (inputApellido.value.length <3){
+        avisos += `el apellido no es valido <br>`
+        entrar = true
+    }
+    if (inputMensaje.value.length <10){
+        avisos += `el mensaje es corto <br>`
+        entrar = true
+    }
+    if (entrar){
+        avisoFallido.innerHTML = avisos
+    } else{
+        avisoFallido.innerHTML = "Enviado"
+        subirAlLs("envio", true )
+    }
+    
+
+
+}
 
 //funcion para definir productos
 
